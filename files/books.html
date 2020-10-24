@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Book Finder</title>
+    <script src="jquery.js"></script>
+  </head>
+  <body>
+    <form>
+      Title: <input name='title'><br>
+      Author: <input name='author'><br>
+      Year: <input name='year'><br>
+    </form>
+
+    <ul>
+      <div id="results"></div>
+    </ul>
+
+    <script>
+      $("input").on("change input textInput", () => {
+        var title = $("input[name='title'").val();
+        var author = $("input[name='author'").val();
+        var year = $("input[name='year'").val();
+
+        var query = '?';
+        if (title) query += 'title=' + title + '&';
+        if (author) query += 'author=' + author + '&';
+        if (year) query += 'year=' + year + '&';
+        var url = 'http://localhost:3000/api/' + query;
+
+        $.getJSON(url, (books,status) => {
+          var results = $("#results");
+          results.html('');
+          books.forEach( (book) => {
+            results.append('<li><i>' + book.title + '</i>, ');
+            book.authors.forEach( (author) => {
+              if (author.name) results.append(author.name + ',');
+            });
+            results.append(book.year + '.</li>');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
