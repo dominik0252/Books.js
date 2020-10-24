@@ -10,6 +10,19 @@ var Book = require('./Book.js');
 
 app.use('/public', express.static('files'));
 
+app.use('/createBook', (req, res) => {
+  var newBook = new Book(req.body);
+
+  newBook.save( (err) => {
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    } else {
+      res.render('created', { book: newBook });
+    }
+  });
+});
+
 app.use('/api', (req, res) => {
   var query = {};
   if(req.query.title) query.title = { $regex : req.query.title };

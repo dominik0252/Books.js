@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost:27017/bookDatabase');
 var Schema = mongoose.Schema;
 
 var authorSchema = new Schema({
-  name: { type: String, required: true, unique: true },
+  name: String,
   affiliation: String
 });
 

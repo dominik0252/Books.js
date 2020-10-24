@@ -1,0 +1,12 @@
+html
+  head
+    title Book Created
+  body
+    h3 The book was successfully created!
+    br
+    p
+      i= book.title + ', '
+      -book.authors.forEach((author) => {
+        =author.name + ', '
+      -})
+      =book.year
